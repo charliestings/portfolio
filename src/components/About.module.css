@@ -1,0 +1,80 @@
+.about { background: var(--bg-secondary); }
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.left, .right { display: flex; flex-direction: column; gap: 24px; }
+
+.bio { font-size: 1.01rem; color: var(--text-secondary); line-height: 1.8; }
+
+/* ---- services ---- */
+.services { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+.serviceCard {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px 16px;
+}
+
+.serviceIcon {
+  width: 38px; height: 38px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: var(--radius-sm);
+  font-size: 1.1rem;
+  color: var(--gold);
+  background: rgba(245,158,11,0.08);
+  border: 1px solid rgba(245,158,11,0.18);
+  flex-shrink: 0;
+}
+
+.serviceTitle { font-size: 0.86rem; font-weight: 700; margin-bottom: 2px; }
+.serviceDesc  { font-size: 0.75rem; color: var(--text-muted); }
+
+/* ---- skills ---- */
+.skillsHeading { font-size: 1.45rem; font-family: var(--font-heading); font-weight: 800; }
+.skills { display: flex; flex-direction: column; gap: 22px; }
+.skillItem { display: flex; flex-direction: column; gap: 8px; }
+
+.skillHeader {
+  display: flex;
+  justify-content: space-between;
+}
+
+.skillName { font-size: 0.88rem; font-weight: 600; }
+.skillLevel { font-size: 0.78rem; font-weight: 700; color: var(--gold); }
+
+.skillTrack {
+  height: 5px;
+  background: rgba(245,158,11,0.06);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  position: relative;
+}
+
+.skillFill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 1.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+/* glowing tip */
+.skillFill::after {
+  content: '';
+  position: absolute;
+  right: -1px; top: 50%;
+  transform: translateY(-50%);
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 8px var(--gold), 0 0 16px var(--amber);
+  opacity: 0.9;
+}
+
+@media (max-width: 900px) { .grid { grid-template-columns: 1fr; gap: 60px; } }
+@media (max-width: 480px) { .services { grid-template-columns: 1fr; } }

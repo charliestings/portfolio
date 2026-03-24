@@ -1,0 +1,107 @@
+.contact {
+  background: var(--bg-tertiary);
+  overflow: hidden;
+  position: relative;
+}
+
+.radiance {
+  position: absolute;
+  width: 800px; height: 800px;
+  background: radial-gradient(circle, rgba(245,158,11,0.08) 0%, transparent 60%);
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.ring1, .ring2 {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+}
+.ring1 {
+  width: 520px; height: 520px;
+  border: 1px solid rgba(245,158,11,0.07);
+}
+.ring2 {
+  width: 780px; height: 780px;
+  border: 1px solid rgba(234,88,12,0.04);
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.heading { margin-bottom: 16px; line-height: 1.1; }
+
+.sub {
+  color: var(--text-secondary);
+  font-size: 1.04rem;
+  max-width: 440px;
+  margin-bottom: 36px;
+  line-height: 1.75;
+}
+
+.mailBtn { font-size: 1rem; padding: 15px 44px; }
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  margin: 40px 0;
+  width: 100%;
+  max-width: 460px;
+}
+.divider::before, .divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(245,158,11,0.2), transparent);
+}
+
+.socials {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  width: 100%;
+  max-width: 500px;
+}
+
+.socialCard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  text-align: left;
+}
+
+.socialCard:hover {
+  border-color: rgba(245,158,11,0.35);
+  box-shadow: 0 8px 30px rgba(245,158,11,0.1);
+}
+
+.socialCard:hover .socialIcon {
+  color: var(--gold);
+  transform: scale(1.15);
+}
+
+.socialIcon {
+  font-size: 1.4rem;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+  transition: var(--transition-fast);
+}
+
+.socialText { display: flex; flex-direction: column; gap: 2px; }
+.socialLabel { font-size: 0.9rem; font-weight: 700; }
+.socialDesc  { font-size: 0.74rem; color: var(--text-muted); }
+
+@media (max-width: 520px) { .socials { grid-template-columns: 1fr; } }

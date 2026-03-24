@@ -1,0 +1,350 @@
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding-top: 90px;
+}
+
+/* ---- Ambient orbs ---- */
+.orb1, .orb2, .orb3 {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(110px);
+  pointer-events: none;
+}
+.orb1 {
+  width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(245,158,11,0.2) 0%, transparent 65%);
+  top: -220px; left: -280px;
+  animation: float 9s ease-in-out infinite;
+}
+.orb2 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(234,88,12,0.13) 0%, transparent 65%);
+  bottom: -160px; right: -200px;
+  animation: float 13s ease-in-out infinite reverse;
+}
+.orb3 {
+  width: 350px; height: 350px;
+  background: radial-gradient(circle, rgba(251,191,36,0.09) 0%, transparent 65%);
+  top: 38%; left: 56%;
+  animation: float 16s ease-in-out infinite 2s;
+}
+
+/* ---- Content ---- */
+.content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 20px;
+  padding-bottom: 60px;
+  width: 100%;
+  max-width: 100%;
+  perspective: 1000px;
+}
+
+/* ---- Generic load animation ---- */
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fadeSlide {
+  opacity: 0;
+  animation: fadeSlideUp 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* ---- Status ---- */
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  background: rgba(74,222,128,0.07);
+  border: 1px solid rgba(74,222,128,0.2);
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #4ade80;
+  transition: box-shadow 0.3s;
+}
+.status:hover { box-shadow: 0 0 20px rgba(74,222,128,0.15); }
+
+.dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #4ade80;
+  flex-shrink: 0;
+  position: relative;
+}
+.dot::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1.5px solid #4ade80;
+  animation: pulse-ring 1.6s ease-out infinite;
+}
+
+/* ---- Greeting ---- */
+.greeting {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  font-weight: 400;
+  color: var(--text-secondary);
+  letter-spacing: 0.04em;
+  margin-bottom: -10px;
+}
+
+/* ============================================================
+   ELEGANT NAME TREATMENT
+   Each letter is individually animated:
+   - starts below with opacity 0
+   - transitions to its place with a spring-like ease
+   ============================================================ */
+.nameWrapper {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: baseline;
+  line-height: 1.05;
+  /* No gap — we control spacing via letter-spacing */
+  letter-spacing: 0.01em;
+  /* Don't clip overflow so descenders of Playfair show */
+  overflow: visible;
+}
+
+.nameLetter {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(3.5rem, 9.5vw, 7.5rem);
+  line-height: 1;
+  display: inline-block;
+
+  /* Start state */
+  opacity: 0;
+  transform: translateY(60%) skewY(4deg);
+
+  /* Elegant spring transition */
+  transition:
+    opacity  0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Gold shimmer gradient per-letter */
+  background: var(--gradient-radiant);
+  background-size: 300% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+
+  /* Subtle glow on the letter */
+  filter: drop-shadow(0 0 18px rgba(245,158,11,0.35));
+
+  /* First letter slightly larger for elegance */
+  will-change: opacity, transform;
+}
+
+.nameLetter:first-child {
+  font-size: clamp(4rem, 11vw, 9rem);
+  /* First letter drops baseline a little so it acts as a drop cap */
+  line-height: 0.9;
+  margin-right: 1px;
+  filter: drop-shadow(0 0 28px rgba(245,158,11,0.45));
+}
+
+/* Revealed state */
+.nameLetterVisible {
+  opacity: 1;
+  transform: translateY(0) skewY(0deg);
+}
+
+/* Continuous shimmer across the whole name */
+@keyframes nameShimmer {
+  0%   { background-position: 0%   center; }
+  100% { background-position: 300% center; }
+}
+.nameLetterVisible {
+  animation: nameShimmer 6s linear infinite;
+}
+
+/* ---- Self-drawing underline ---- */
+.underline {
+  height: 3px;
+  width: 0;
+  background: var(--gradient-gold);
+  border-radius: var(--radius-full);
+  /* Smooth draw-in */
+  transition: width 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Subtle glow */
+  box-shadow: 0 0 10px rgba(245,158,11,0.6);
+  margin-top: -4px;
+}
+.underlineVisible { width: 120px; }
+
+/* ---- Typewriter row ---- */
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: clamp(1rem, 3vw, 1.5rem);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--text-secondary);
+  min-height: 2.1rem;
+}
+
+.bracket {
+  color: var(--gold-dim);
+  font-size: 0.9em;
+  opacity: 0.8;
+}
+
+.typewriter { color: var(--gold-light); }
+
+.cursor {
+  color: var(--gold);
+  font-weight: 200;
+  animation: blink 1s step-end infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+/* ---- Bio ---- */
+.bio {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  line-height: 1.8;
+  text-align: center;
+}
+
+/* ---- CTAs ---- */
+.ctas {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.primaryBtn {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Shine sweep on hover */
+.primaryBtn::after {
+  content: '';
+  position: absolute;
+  top: -50%; left: -75%;
+  width: 50%; height: 200%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255,255,255,0.18) 50%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  transition: left 0.5s ease;
+}
+.primaryBtn:hover::after { left: 120%; }
+
+.socialRow { display: flex; gap: 8px; }
+
+.iconBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  background: rgba(245,158,11,0.05);
+  border: 1px solid rgba(245,158,11,0.18);
+  font-size: 1.15rem;
+  color: var(--text-secondary);
+  transition: var(--transition-smooth);
+}
+.iconBtn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  box-shadow: 0 0 24px rgba(245,158,11,0.25);
+  transform: translateY(-3px) rotate(4deg);
+}
+
+/* ---- Stats ---- */
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: 44px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(245,158,11,0.09);
+  width: 100%;
+  max-width: 600px;
+  margin-top: 10px;
+}
+
+.stat { display: flex; flex-direction: column; gap: 2px; }
+
+.statValue {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 900;
+  line-height: 1;
+  background: var(--gradient-radiant);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 5s linear infinite;
+}
+
+.statLabel {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+/* ---- Scroll indicator ---- */
+.scrollHint {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.mouse {
+  width: 26px; height: 44px;
+  border: 2px solid rgba(245,158,11,0.3);
+  border-radius: 13px;
+  display: flex;
+  justify-content: center;
+  padding-top: 7px;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+.mouse:hover {
+  border-color: var(--gold);
+  box-shadow: 0 0 16px rgba(245,158,11,0.25);
+}
+
+.wheel {
+  width: 4px; height: 8px;
+  background: var(--gradient-gold);
+  border-radius: var(--radius-full);
+  animation: scrollWheel 2.2s ease infinite;
+}
+@keyframes scrollWheel {
+  0%   { transform: translateY(0);   opacity: 1; }
+  70%  { transform: translateY(16px); opacity: 0; }
+  100% { transform: translateY(0);   opacity: 0; }
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 768px) {
+  .stats { gap: 28px; }
+  .ctas { justify-content: center; }
+  .underline { margin: -4px auto 0; }
+  .nameWrapper { justify-content: center; flex-wrap: wrap; }
+}

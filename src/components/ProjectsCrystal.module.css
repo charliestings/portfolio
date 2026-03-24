@@ -1,0 +1,34 @@
+.crystalWrap {
+  position: absolute;
+  right: -60px;
+  top: -40px;
+  width: clamp(200px, 28vw, 340px);
+  height: clamp(200px, 28vw, 340px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.glow {
+  position: absolute;
+  inset: -30%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(245, 158, 11, 0.1) 0%,
+    rgba(234, 88, 12, 0.05) 40%,
+    transparent 70%
+  );
+  pointer-events: none;
+  animation: pulse 5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50%      { opacity: 1;   transform: scale(1.06); }
+}
+
+@media (max-width: 768px) {
+  .crystalWrap {
+    display: none;
+  }
+}
